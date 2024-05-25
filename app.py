@@ -1,7 +1,7 @@
 from flask import Flask
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from db_create import User  # Załóżmy, że nasza klasa User znajduje się w module o nazwie `your_module`
+from db_create import User  
 
 app = Flask(__name__)
 
