@@ -13,12 +13,17 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 
-@app.route('/')
-def index():
+@app.route('/users')
+def users():
     # Pobieramy wszystkich użytkowników z bazy danych
     users = session.query(User).all()
 
     return render_template('index.html', users=users)
+
+
+@app.route('/')
+def index():
+    return render_template('login.html')
 
 
 if __name__ == '__main__':
