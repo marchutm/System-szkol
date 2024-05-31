@@ -1,0 +1,77 @@
+Dokumentacja aplikacji Zintegrowana Platforma Szkolna
+
+Updated 31-05-2024, 16:48
+
+Opis ogólny:
+Zintegrowana Platforma Szkolna to aplikacja webowa stworzona w języku Python przy użyciu frameworka Flask oraz biblioteki SQLAlchemy do obsługi bazy danych SQLite. Jest to system przeznaczony do zarządzania użytkownikami i ich danymi, gdzie użytkownicy mogą logować się na swoje konta, przeglądać swoje panele użytkownika lub panel administratora, oraz przeglądać listę wszystkich użytkowników.
+
+Uruchomienie aplikacji:
+Aby uruchomić aplikację, należy uruchomić plik app.py w interpreterze Pythona. Można to zrobić poprzez wywołanie polecenia python app.py w terminalu lub środowisku Pythona. Po uruchomieniu, aplikacja będzie dostępna pod adresem http://localhost:5000/ w przeglądarce internetowej.
+
+Struktura aplikacji:
+Aplikacja składa się z trzech głównych modułów oraz katalogu templates, który zawiera pliki HTML szablonów.
+
+app.py: Główny plik aplikacji, zawierający logikę routingu oraz interakcji z użytkownikiem poprzez przeglądarkę.
+db_create.py: Moduł odpowiedzialny za tworzenie struktury tabel w bazie danych SQLite oraz dodawanie przykładowych rekordów.
+db_generic_records.py: Moduł zawierający skrypt dodający przykładowe rekordy do bazy danych.
+templates: Katalog zawierający pliki HTML szablonów, wykorzystywane do renderowania interfejsu użytkownika.
+static: Katalog zawierjący pliki CSS, wykorzystywane do modyfikacji stylów elementów HTML.
+
+Opis plików szablonów (templates):
+login.html: Formularz logowania, który umożliwia użytkownikom logowanie do systemu. Wyświetla się, gdy użytkownik nie jest zalogowany lub gdy wystąpi błąd logowania.
+user_dashboard.html: Panel użytkownika, który wyświetla się po zalogowaniu użytkownika o roli "user".
+admin_dashboard.html: Panel administratora, który wyświetla się po zalogowaniu użytkownika o roli "admin".
+index.html: Strona wyświetlająca listę wszystkich użytkowników z ich podstawowymi danymi.
+
+Opis funkcji i routingu (app.py):
+users(): Funkcja obsługująca ścieżkę /users, wyświetla listę wszystkich użytkowników.
+index(): Funkcja obsługująca ścieżkę /, odpowiedzialna za logowanie użytkowników oraz wyświetlanie formularza logowania.
+user_dashboard(): Funkcja obsługująca ścieżkę /user/dashboard, wyświetla panel użytkownika.
+admin_dashboard(): Funkcja obsługująca ścieżkę /admin/dashboard, wyświetla panel administratora.
+logout(): Funkcja obsługująca ścieżkę /logout, służy do wylogowania użytkownika.
+
+Opis działania aplikacji:
+
+1. Inicjalizacja aplikacji i połączenie z bazą danych:
+
+Na początku plik app.py importuje niezbędne moduły Flask oraz SQLAlchemy, a także klasę User z pliku db_create.py.
+Tworzony jest obiekt aplikacji Flask (app) oraz ustawiany jest tajny klucz sesji (app.secret_key).
+Następnie tworzony jest silnik do obsługi bazy danych SQLite oraz sesja do interakcji z bazą danych.
+
+2. Funkcja index(): Logowanie użytkownika:
+
+Gdy użytkownik przesyła formularz logowania (poprzez metodę POST), dane z formularza są pobierane.
+Następnie sprawdzane jest, czy użytkownik o podanym adresie email i haśle istnieje w bazie danych.
+Jeśli uwierzytelnienie przebiegnie pomyślnie, informacje o użytkowniku są przechowywane w sesji (login_session) i użytkownik zostaje przekierowany do odpowiedniego panelu (user_dashboard lub admin_dashboard).
+W przypadku niepoprawnych danych logowania, użytkownik pozostaje na stronie logowania, a wyświetlany jest komunikat o błędzie.
+
+3. Funkcje user_dashboard() i admin_dashboard():
+
+Te funkcje sprawdzają, czy użytkownik jest zalogowany oraz czy ma odpowiednią rolę, a następnie renderują odpowiedni panel użytkownika lub administratora.
+
+4. Funkcja logout(): Wylogowanie użytkownika:
+
+Po wywołaniu tej funkcji, sesja użytkownika zostaje wyczyszczona, co oznacza wylogowanie.
+Użytkownik zostaje przekierowany do strony logowania, a wyświetlany jest komunikat o pomyślnym wylogowaniu.
+
+5. Funkcja users(): Wyświetlanie listy użytkowników:
+
+Ta funkcja wyświetla listę wszystkich użytkowników z bazy danych.
+Jeśli użytkownik nie jest zalogowany, zostaje przekierowany do strony logowania.
+
+6. Szablony HTML:
+
+Wszystkie szablony HTML znajdujące się w katalogu templates zawierają kod HTML wzbogacony o znaczniki Jinja2, które umożliwiają dynamiczne generowanie treści w oparciu o dane z serwera.
+Szablony zawierają formularze logowania, panele użytkownika i administratora, oraz listę użytkowników.
+
+7. Obsługa komunikatów flash:
+
+Aplikacja wykorzystuje mechanizm komunikatów flash do wyświetlania informacji o działaniach użytkownika, takich jak udane logowanie czy wylogowanie, oraz komunikatów o błędach.
+
+
+
+Baza danych:
+Aplikacja korzysta z bazy danych SQLite, która przechowuje informacje o użytkownikach. Struktura tabeli users obejmuje pola takie jak username, email, password, role oraz inne informacje o użytkownikach.
+
+Zależności:
+Aplikacja wykorzystuje framework Flask oraz bibliotekę SQLAlchemy. Wymagane biblioteki Pythona można zainstalować za pomocą menedżera pakietów pip poprzez wykonanie polecenia pip install flask sqlalchemy.
