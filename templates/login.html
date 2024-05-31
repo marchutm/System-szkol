@@ -13,22 +13,33 @@
     </div>
     <div class="purple-bar"></div>
 
-    <form>
+    <form method="POST" action="{{ url_for('index') }}">
         <h2>Logowanie</h2>
-        <input type="text" id="email" name="email" placeholder="email">
-        <input type="password" id="password" name="password" placeholder="hasło" value="********">
+        <input type="text" id="email" name="email" placeholder="Email">
+        <input type="password" id="password" name="password" placeholder="Hasło" value="">
+        <button type="submit">Zaloguj się</button>
+        {% if error %}
+        <p style="color:red;">{{ error }}</p>
+        {% endif %}
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
     </form>
 
     <script>
         document.getElementById('password').addEventListener('focus', function() {
-            if (this.value === '********') {
+            if (this.value === '') {
                 this.value = '';
             }
         });
 
         document.getElementById('password').addEventListener('blur', function() {
             if (this.value === '') {
-                this.value = '********';
+                this.value = '';
             }
         });
     </script>

@@ -42,3 +42,34 @@ h1 {
 #users-table td {
     color: #333;
 }
+
+.flash {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 15px 20px;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1000;
+}
+
+.flash.success {
+    background-color: #4caf50;
+    color: #ffffff;
+}
+
+.flash.error {
+    background-color: #f44336;
+    color: #ffffff;
+}
+
+.flash.show {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+}
