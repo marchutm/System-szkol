@@ -78,6 +78,27 @@ def logout():
     flash('Wylogowano pomyślnie!', 'success')  # Dodajemy wiadomość flash
     return redirect(url_for('index'))
 
+@app.route('/api/get_users')
+def get_users():
+    if 'username' not in login_session:
+        return redirect(url_for('index'))
+    # Pobieramy wszystkich użytkowników z bazy danych
+    users = session.query(User).all()
+
+    users_list = []
+    for user in users:
+        user_data = {
+            'id': user.id,
+            'username': user.username,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'occupation': user.occupation,
+            'role': user.role
+        }
+        users_list.append(user_data)
+
+    return {'users': users_list}
+
 
 if __name__ == '__main__':
     app.run(debug=True)

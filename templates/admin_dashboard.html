@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='login_styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <div class="header">
@@ -24,5 +25,53 @@
         {% endif %}
         {% endwith %}
     </div>
+
+    <!-- Dodajemy przycisk do pokazywania i ukrywania listy użytkowników -->
+<button id="toggle-users-btn">Pokaż wszystkich użytkowników</button>
+
+<!-- Tworzymy tabelę, która będzie wyświetlać listę użytkowników -->
+<table id="users-table" style="display: none;">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Occupation</th>
+            <th>Role</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Miejsce na dane użytkowników -->
+    </tbody>
+</table>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("#toggle-users-btn").click(function(){
+        if ($("#users-table").is(":visible")) {
+            // Jeśli tabela jest widoczna, ukrywamy ją i zmieniamy tekst przycisku
+            $("#users-table").hide();
+            $(this).text("Pokaż wszystkich użytkowników");
+        } else {
+            // Jeśli tabela jest ukryta, pokazujemy ją i zmieniamy tekst przycisku
+            $(this).text("Ukryj dane");
+            $.get("/api/get_users", function(data, status){
+                var users = data.users;
+                $("#users-table tbody").empty(); // Usuwamy stare dane
+                for (var i = 0; i < users.length; i++) {
+                    var user = users[i];
+                    var row = "<tr><td>" + user.id + "</td><td>" + user.username + "</td><td>" + user.first_name + "</td><td>" + user.last_name + "</td><td>" + user.occupation + "</td><td>" + user.role + "</td></tr>";
+                    $("#users-table tbody").append(row);
+                }
+                $("#users-table").show();
+            });
+        }
+    });
+});
+</script>
+
+
 </body>
 </html>

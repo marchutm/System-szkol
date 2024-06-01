@@ -27,7 +27,7 @@ h1 {
 }
 
 #users-table th {
-    background-color: #4CAF50;
+    background-color: #57bcd1;
     color: white;
 }
 
@@ -42,6 +42,28 @@ h1 {
 #users-table td {
     color: #333;
 }
+
+#toggle-users-btn {
+    display: block;
+    width: 200px;
+    margin: 20px auto;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #57bcd1;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#toggle-users-btn:hover {
+    background-color: #4fa4b8;
+}
+
+
+
+
+
 
 .flash {
     position: fixed;
