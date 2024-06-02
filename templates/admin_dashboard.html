@@ -17,11 +17,15 @@
     <div class="content">
         <h1>Welcome, {{ username }}!</h1>
         <p>This is the admin dashboard.</p>
-        {% with messages = get_flashed_messages(with_categories=true) %}
+       {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
-            {% for category, message in messages %}
-            <div class="flash {{ category }}">{{ message }}</div>
-            {% endfor %}
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    {% for category, message in messages %}
+                        alert("{{ message }}");
+                    {% endfor %}
+                });
+            </script>
         {% endif %}
         {% endwith %}
     </div>
@@ -39,6 +43,9 @@
             <th>Last Name</th>
             <th>Occupation</th>
             <th>Role</th>
+              {% if session.get('role') == 'admin' %}
+                <th>Action</th>
+                {% endif %}
         </tr>
     </thead>
     <tbody>
@@ -62,7 +69,11 @@ $(document).ready(function(){
                 $("#users-table tbody").empty(); // Usuwamy stare dane
                 for (var i = 0; i < users.length; i++) {
                     var user = users[i];
-                    var row = "<tr><td>" + user.id + "</td><td>" + user.username + "</td><td>" + user.first_name + "</td><td>" + user.last_name + "</td><td>" + user.occupation + "</td><td>" + user.role + "</td></tr>";
+                    var row = "<tr><td>" + user.id + "</td><td>" + user.username + "</td><td>" + user.first_name + "</td><td>" + user.last_name + "</td><td>" + user.occupation + "</td><td>" + user.role + "</td>";
+                    {% if session.get('role') == 'admin' %}
+                        row += "<td><form action='/delete_user/" + user.id + "' method='post' onsubmit='return confirm(\"Na pewno chcesz usunąć użytkownika?\");'><button type='submit' class='delete-button'>Usuń</button></form></td>";
+                    {% endif %}
+                    row += "</tr>";
                     $("#users-table tbody").append(row);
                 }
                 $("#users-table").show();

@@ -99,6 +99,20 @@ def get_users():
 
     return {'users': users_list}
 
+@app.route('/delete_user/<int:user_id>', methods=['POST'])
+def delete_user(user_id):
+    if 'username' not in login_session or login_session.get('role') != 'admin':
+        return redirect(url_for('index'))
+    user_to_delete = session.query(User).get(user_id)
+    if user_to_delete and user_to_delete.role != 'admin':
+        session.delete(user_to_delete)
+        session.commit()
+        flash('Usunięto!', 'success')
+    else:
+        flash('Nie możesz usunąć admina!', 'error')
+    return redirect(url_for('admin_dashboard'))
+
 
 if __name__ == '__main__':
     app.run(debug=True)
+

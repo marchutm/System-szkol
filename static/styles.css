@@ -95,3 +95,11 @@ h1 {
     visibility: visible;
     transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
 }
+
+.delete-button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 12px;
+}

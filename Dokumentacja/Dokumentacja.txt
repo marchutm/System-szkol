@@ -30,6 +30,7 @@ user_dashboard(): Funkcja obsługująca ścieżkę /user/dashboard, wyświetla p
 admin_dashboard(): Funkcja obsługująca ścieżkę /admin/dashboard, wyświetla panel administratora.
 logout(): Funkcja obsługująca ścieżkę /logout, służy do wylogowania użytkownika.
 
+delete_user(user_id): Funkcja obsługująca ścieżkę /delete_user/<int:user_id>, usuwa użytkownika z bazy danych i przekierowuje na panel administratora.
 Opis działania aplikacji:
 
 1. Inicjalizacja aplikacji i połączenie z bazą danych:
@@ -59,12 +60,19 @@ Użytkownik zostaje przekierowany do strony logowania, a wyświetlany jest komun
 Ta funkcja wyświetla listę wszystkich użytkowników z bazy danych.
 Jeśli użytkownik nie jest zalogowany, zostaje przekierowany do strony logowania.
 
-6. Szablony HTML:
+6. Funkcja delete_user(user_id): Usuwanie użytkownika:
+
+Funkcja delete_user jest wywoływana poprzez metodę POST na ścieżce /delete_user/<int:user_id>.
+Funkcja sprawdza, czy użytkownik jest zalogowany i ma rolę administratora,
+a następnie próbuje usunąć użytkownika z bazy danych. Jeśli użytkownik nie jest adminem,
+zostaje usunięty, a administrator jest przekierowywany z komunikatem o sukcesie. Jeśli użytkownik jest adminem, wyświetlany jest komunikat o błędzie.
+
+7. Szablony HTML:
 
 Wszystkie szablony HTML znajdujące się w katalogu templates zawierają kod HTML wzbogacony o znaczniki Jinja2, które umożliwiają dynamiczne generowanie treści w oparciu o dane z serwera.
 Szablony zawierają formularze logowania, panele użytkownika i administratora, oraz listę użytkowników.
 
-7. Obsługa komunikatów flash:
+8. Obsługa komunikatów flash:
 
 Aplikacja wykorzystuje mechanizm komunikatów flash do wyświetlania informacji o działaniach użytkownika, takich jak udane logowanie czy wylogowanie, oraz komunikatów o błędach.
 
