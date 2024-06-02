@@ -19,9 +19,9 @@ def users():
     if 'username' not in login_session:
         return redirect(url_for('index'))
     # Pobieramy wszystkich użytkowników z bazy danych
-    users = session.query(User).all()
+    u = session.query(User).all()
 
-    return render_template('index.html', users=users)
+    return render_template('index.html', users=u)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -31,14 +31,11 @@ def index():
             return redirect(url_for('admin_dashboard'))
         else:
             return redirect(url_for('user_dashboard'))
-
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
-
         # Sprawdzamy, czy użytkownik istnieje w bazie danych
         user = session.query(User).filter_by(email=email, password=password).first()
-
         if user:
             login_session['username'] = user.username
             login_session['role'] = user.role
@@ -50,7 +47,6 @@ def index():
         else:
             flash('Niepoprawne dane logowania!', 'error')  # Dodajemy wiadomość flash
             return render_template('login.html')
-
     return render_template('login.html')
 
 
@@ -78,15 +74,16 @@ def logout():
     flash('Wylogowano pomyślnie!', 'success')  # Dodajemy wiadomość flash
     return redirect(url_for('index'))
 
+
 @app.route('/api/get_users')
 def get_users():
     if 'username' not in login_session:
         return redirect(url_for('index'))
     # Pobieramy wszystkich użytkowników z bazy danych
-    users = session.query(User).all()
+    u = session.query(User).all()
 
     users_list = []
-    for user in users:
+    for user in u:
         user_data = {
             'id': user.id,
             'username': user.username,
@@ -98,6 +95,7 @@ def get_users():
         users_list.append(user_data)
 
     return {'users': users_list}
+
 
 @app.route('/delete_user/<int:user_id>', methods=['POST'])
 def delete_user(user_id):
@@ -115,4 +113,3 @@ def delete_user(user_id):
 
 if __name__ == '__main__':
     app.run(debug=True)
-

@@ -2,9 +2,13 @@
 
 body {
     font-family: Arial, sans-serif;
+    background-color: #e0f7fa;
     margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
 }
 
 h1 {
@@ -31,7 +35,7 @@ h1 {
     color: white;
 }
 
-#users-table tr:nth-child(even) {
+#users-table tr {
     background-color: #f2f2f2;
 }
 
@@ -60,42 +64,6 @@ h1 {
     background-color: #4fa4b8;
 }
 
-
-
-
-
-
-.flash {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 15px 20px;
-    border-radius: 10px;
-    font-size: 18px;
-    font-weight: bold;
-    text-align: center;
-    opacity: 0;
-    visibility: hidden;
-    z-index: 1000;
-}
-
-.flash.success {
-    background-color: #4caf50;
-    color: #ffffff;
-}
-
-.flash.error {
-    background-color: #f44336;
-    color: #ffffff;
-}
-
-.flash.show {
-    opacity: 1;
-    visibility: visible;
-    transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
-}
-
 .delete-button {
     background-color: red;
     color: white;
@@ -103,3 +71,44 @@ h1 {
     padding: 5px 10px;
     font-size: 12px;
 }
+
+.purple-bar {
+    width: 100%;
+    height: 10px;
+    background-color: #800080; /* Fioletowy pasek */
+    position: fixed;
+    top: 75px; /* Dopasuj do wysokości nagłówka */
+    left: 0;
+    z-index: 999;
+}
+
+.header {
+    width: 100%;
+    background-color: black;
+    color: #00bcd4;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.header span {
+    margin-left: 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.login-button {
+    margin-right: 30px;
+    background-color: #00bcd4;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+

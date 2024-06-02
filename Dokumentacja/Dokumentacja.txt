@@ -1,6 +1,6 @@
 Dokumentacja aplikacji Zintegrowana Platforma Szkolna
 
-Updated 31-05-2024, 16:48
+Updated 02-06-2024, 15:55
 
 Opis ogólny:
 Zintegrowana Platforma Szkolna to aplikacja webowa stworzona w języku Python przy użyciu frameworka Flask oraz biblioteki SQLAlchemy do obsługi bazy danych SQLite. Jest to system przeznaczony do zarządzania użytkownikami i ich danymi, gdzie użytkownicy mogą logować się na swoje konta, przeglądać swoje panele użytkownika lub panel administratora, oraz przeglądać listę wszystkich użytkowników.
@@ -20,7 +20,7 @@ static: Katalog zawierjący pliki CSS, wykorzystywane do modyfikacji stylów ele
 Opis plików szablonów (templates):
 login.html: Formularz logowania, który umożliwia użytkownikom logowanie do systemu. Wyświetla się, gdy użytkownik nie jest zalogowany lub gdy wystąpi błąd logowania.
 user_dashboard.html: Panel użytkownika, który wyświetla się po zalogowaniu użytkownika o roli "user".
-admin_dashboard.html: Panel administratora, który wyświetla się po zalogowaniu użytkownika o roli "admin".
+admin_dashboard.html: Panel administratora, który wyświetla się po zalogowaniu użytkownika o roli "admin". Poza napisem powitania można wyświetlić listę użytkowników, a także usunąć użytkowników z bazy danych.
 index.html: Strona wyświetlająca listę wszystkich użytkowników z ich podstawowymi danymi.
 
 Opis funkcji i routingu (app.py):
@@ -30,7 +30,6 @@ user_dashboard(): Funkcja obsługująca ścieżkę /user/dashboard, wyświetla p
 admin_dashboard(): Funkcja obsługująca ścieżkę /admin/dashboard, wyświetla panel administratora.
 logout(): Funkcja obsługująca ścieżkę /logout, służy do wylogowania użytkownika.
 
-delete_user(user_id): Funkcja obsługująca ścieżkę /delete_user/<int:user_id>, usuwa użytkownika z bazy danych i przekierowuje na panel administratora.
 Opis działania aplikacji:
 
 1. Inicjalizacja aplikacji i połączenie z bazą danych:
@@ -60,22 +59,14 @@ Użytkownik zostaje przekierowany do strony logowania, a wyświetlany jest komun
 Ta funkcja wyświetla listę wszystkich użytkowników z bazy danych.
 Jeśli użytkownik nie jest zalogowany, zostaje przekierowany do strony logowania.
 
-6. Funkcja delete_user(user_id): Usuwanie użytkownika:
-
-Funkcja delete_user jest wywoływana poprzez metodę POST na ścieżce /delete_user/<int:user_id>.
-Funkcja sprawdza, czy użytkownik jest zalogowany i ma rolę administratora,
-a następnie próbuje usunąć użytkownika z bazy danych. Jeśli użytkownik nie jest adminem,
-zostaje usunięty, a administrator jest przekierowywany z komunikatem o sukcesie. Jeśli użytkownik jest adminem, wyświetlany jest komunikat o błędzie.
-
-7. Szablony HTML:
+6. Szablony HTML:
 
 Wszystkie szablony HTML znajdujące się w katalogu templates zawierają kod HTML wzbogacony o znaczniki Jinja2, które umożliwiają dynamiczne generowanie treści w oparciu o dane z serwera.
 Szablony zawierają formularze logowania, panele użytkownika i administratora, oraz listę użytkowników.
 
-8. Obsługa komunikatów flash:
+7. Obsługa komunikatów flash:
 
 Aplikacja wykorzystuje mechanizm komunikatów flash do wyświetlania informacji o działaniach użytkownika, takich jak udane logowanie czy wylogowanie, oraz komunikatów o błędach.
-
 
 
 Baza danych:

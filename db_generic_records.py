@@ -10,8 +10,8 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 # Usuwanie wszystkich rekordów z tabeli users
-# if True:
-#     session.query(User).delete()
+if True:
+    session.query(User).delete()
 
 # Tworzymy trzy przykładowe rekordy
 sample_users = [
@@ -21,6 +21,10 @@ sample_users = [
          last_name='Kowalska', password='password2', role='user', occupation='teacher', phone_number='987654321'),
     User(username='user3', email='user3@example.com', first_name='Jan',
          last_name='Kowalski', password='password3', role='admin', occupation='teacher', phone_number='555666777'),
+    User(username='user4', email='user4@example.com', first_name='Jan',
+         last_name='Kowalski', password='password4', role='admin', occupation='teacher', phone_number='187654321'),
+    User(username='user5', email='user5@example.com', first_name='Michał',
+         last_name='Kowalski', password='password5', role='user', occupation='majster', phone_number='655666777'),
 ]
 
 # Dodajemy rekordy do bazy danych
