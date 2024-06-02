@@ -15,7 +15,7 @@
 
     <div class="content">
         <h1>Welcome, {{ username }}!</h1>
-        <p>This is the user dashboard.</p>
+        <p>This is the admin dashboard.</p>
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             {% for category, message in messages %}
