@@ -1,3 +1,90 @@
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+{#    <title>Admin Dashboard</title>#}
+{#    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">#}
+{#</head>#}
+{#<body>#}
+{#    <div class="header">#}
+{#        <span>ZINTEGROWANA PLATFORMA SZKOLNA</span>#}
+{#        <a href="{{ url_for('logout') }}" class="login-button">Wyloguj</a>#}
+{#    </div>#}
+{#    <div class="purple-bar"></div>#}
+{##}
+{#    <div class="content">#}
+{#        <h1>Welcome, {{ username }}!</h1>#}
+{#        <p>This is the admin dashboard.</p>#}
+{#        {% with messages = get_flashed_messages(with_categories=true) %}#}
+{#        {% if messages %}#}
+{#            {% for category, message in messages %}#}
+{#            <div class="flash {{ category }}">{{ message }}</div>#}
+{#            {% endfor %}#}
+{#        {% endif %}#}
+{#        {% endwith %}#}
+{#    </div>#}
+{##}
+{#    <!-- Dodajemy przycisk do pokazywania i ukrywania listy użytkowników -->#}
+{#    <button id="toggle-users-btn">Pokaż wszystkich użytkowników</button>#}
+{##}
+{#    <!-- Tworzymy tabelę, która będzie wyświetlać listę użytkowników -->#}
+{#    <table id="users-table" style="display: none;">#}
+{#        <thead>#}
+{#            <tr>#}
+{#                <th>ID</th>#}
+{#                <th>Username</th>#}
+{#                <th>First Name</th>#}
+{#                <th>Last Name</th>#}
+{#                <th>Occupation</th>#}
+{#                <th>Role</th>#}
+{#                {% if session.get('role') == 'admin' %}#}
+{#                <th>Action</th>#}
+{#                {% endif %}#}
+{#            </tr>#}
+{#        </thead>#}
+{#        <tbody>#}
+{#            <!-- Miejsce na dane użytkowników -->#}
+{#        </tbody>#}
+{#    </table>#}
+{##}
+{#    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>#}
+{#    <script>#}
+{#    $(document).ready(function(){#}
+{#        $("#toggle-users-btn").click(function(){#}
+{#            if ($("#users-table").is(":visible")) {#}
+{#                // Jeśli tabela jest widoczna, ukrywamy ją i zmieniamy tekst przycisku#}
+{#                $("#users-table").hide();#}
+{#                $(this).text("Pokaż wszystkich użytkowników");#}
+{#            } else {#}
+{#                // Jeśli tabela jest ukryta, pokazujemy ją i zmieniamy tekst przycisku#}
+{#                $(this).text("Ukryj dane");#}
+{#                $.get("/api/get_users", function(data, status){#}
+{#                    var users = data.users;#}
+{#                    $("#users-table tbody").empty(); // Usuwamy stare dane#}
+{#                    for (var i = 0; i < users.length; i++) {#}
+{#                        var user = users[i];#}
+{#                        var row = "<tr><td>" + user.id + "</td><td>" + user.username + "</td><td>" + user.first_name + "</td><td>" + user.last_name + "</td><td>" + user.occupation + "</td><td>" + user.role + "</td>";#}
+{#                        {% if session.get('role') == 'admin' %}#}
+{#                        row += "<td><form action='/delete_user/" + user.id + "' method='post' onsubmit='return confirm(\"Na pewno chcesz usunąć użytkownika?\");'><button type='submit' class='delete-button'>Usuń</button></form></td>";#}
+{#                        if (user.role !== 'admin') {#}
+{#                            row += "<button class='change-role-button' data-id='" + user.id + "' data-role='" + user.role + "'>Zmień rolę</button>";#}
+{#                        }#}
+{#                        {% endif %}#}
+{#                        row += "</tr>";#}
+{#                        $("#users-table tbody").append(row);#}
+{#                    }#}
+{#                    $("#users-table").show();#}
+{#                });#}
+{#            }#}
+{#        });#}
+{#    });#}
+{#    </script>#}
+{#</body>#}
+{#</html>#}
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -67,6 +154,9 @@
                         var row = "<tr><td>" + user.id + "</td><td>" + user.username + "</td><td>" + user.first_name + "</td><td>" + user.last_name + "</td><td>" + user.occupation + "</td><td>" + user.role + "</td>";
                         {% if session.get('role') == 'admin' %}
                         row += "<td><form action='/delete_user/" + user.id + "' method='post' onsubmit='return confirm(\"Na pewno chcesz usunąć użytkownika?\");'><button type='submit' class='delete-button'>Usuń</button></form></td>";
+                        if (user.role !== 'admin') {
+                            row += "<td><form action='/change_role/" + user.id + "' method='post' onsubmit='return confirm(\"Na pewno zmienić rolę użytkownika?\");'><select name='role'><option value='user'>użytkownik</option><option value='IT'>IT</option></select><button type='submit' class='change-role-button' style='background-color: green; color: white;'>Zmień Rolę</button></form></td>";
+                        }
                         {% endif %}
                         row += "</tr>";
                         $("#users-table tbody").append(row);

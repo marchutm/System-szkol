@@ -112,3 +112,11 @@ h1 {
     cursor: pointer;
 }
 
+
+.change-role-button {
+    background-color: #00ff00;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 12px;
+}
